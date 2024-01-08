@@ -20,16 +20,10 @@ public class WallSensor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Walls")
-        {
-            Debug.Log(name);
-            if (name == "right")
-            {
-                player.GetComponent<PlayerController>().rWall = true;
-            }
-            else if (name == "left") {
-                player.GetComponent<PlayerController>().lWall = true;
-            }
+        if (collision.tag == "Walls") { 
+       
+                player.GetComponent<PlayerController>().touchWall(collision,  name);
+          
         }
 
     }

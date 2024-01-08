@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float jumpForce =  200;
 
+    private ArrayList walls;
+    private Collider2D wall;
     [SerializeField] public bool grounded, lWall, rWall;
     [SerializeField]float vel=5;
 
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         playerRenderer = GetComponent<SpriteRenderer>();
         grounded = false;
+        walls = new ArrayList();
 
     }
 
@@ -28,13 +31,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isDead) {
-            if (Input.GetAxis("Horizontal")!=0 && grounded) {
-                if (Input.GetAxis("Horizontal") > 0)
+            if (Input.GetAxis("Horizontal")!=0) {
+                if (Input.GetAxis("Horizontal") > 0 && !rWall)
                 {
                     playerRenderer.flipX = false;
                     walk(1);
                 }
-                else {
+                else if(Input.GetAxis("Horizontal") < 0 && !lWall){
 
                     playerRenderer.flipX = true;
                     walk(-1);
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
    public void setGrounded(bool g) {
         grounded = g;
+        walls.Clear();
     }
 
     public void jump() {
@@ -59,13 +63,13 @@ public class PlayerController : MonoBehaviour
             //playerRb.velocity = Vector2.zero;
             playerRb.AddForce(new Vector2(0,jumpForce));
         }
-        else if (lWall)
+        else if (lWall && !checkWall())
         {
             playerRb.velocity = Vector2.zero;
             playerRb.AddForce(new Vector2(jumpForce*2, jumpForce * 2));
 
         }
-        else if (rWall) {
+        else if (rWall && !checkWall()) {
             playerRb.velocity = Vector2.zero;
             playerRb.AddForce(new Vector2(-jumpForce * 2, jumpForce * 2));
         }
@@ -74,5 +78,27 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = new Vector2(d*vel,playerRb.velocity.y);
     
     
+    }
+
+    private bool checkWall() {
+        bool check;
+        check = walls.Contains(this.wall);
+            if (!check) {
+            walls.Add(this.wall);
+        }
+
+            return check;
+    }
+
+    public void touchWall(Collider2D wall, string name) {
+        if (name == "right")
+        {
+            rWall = true;
+        }
+        else if (name == "left")
+        {
+            lWall = true;
+        }
+        this.wall = wall;
     }
 }
