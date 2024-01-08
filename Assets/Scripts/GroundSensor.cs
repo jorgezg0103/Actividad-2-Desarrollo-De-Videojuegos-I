@@ -22,12 +22,16 @@ public class GroundSensor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player.GetComponent<PlayerController>().setGrounded(true);
+        if (collision.tag == "Ground")
+        {
+            player.GetComponent<PlayerController>().setGrounded(true);
+        }
         
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        player.GetComponent<PlayerController>().setGrounded(false);
+        if (collision.tag == "Ground")
+            player.GetComponent<PlayerController>().setGrounded(false);
         
     }
 }

@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Vector2 jumpForce = new Vector2(0, 200);
-   bool grounded;
+    [SerializeField] float jumpForce =  200;
+
+    [SerializeField] public bool grounded, lWall, rWall;
     [SerializeField]float vel=5;
 
     private Rigidbody2D playerRb;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isDead) {
-            if (Input.GetAxis("Horizontal")!=0) {
+            if (Input.GetAxis("Horizontal")!=0 && grounded) {
                 if (Input.GetAxis("Horizontal") > 0)
                 {
                     playerRenderer.flipX = false;
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) {
                 jump();
             }
-            
+           
         }
         
     }
@@ -53,9 +54,20 @@ public class PlayerController : MonoBehaviour
     }
 
     public void jump() {
-        if (grounded) { 
-        playerRb.velocity = Vector2.zero;
-        playerRb.AddForce(jumpForce);
+        if (grounded)
+        {
+            //playerRb.velocity = Vector2.zero;
+            playerRb.AddForce(new Vector2(0,jumpForce));
+        }
+        else if (lWall)
+        {
+            playerRb.velocity = Vector2.zero;
+            playerRb.AddForce(new Vector2(jumpForce*2, jumpForce * 2));
+
+        }
+        else if (rWall) {
+            playerRb.velocity = Vector2.zero;
+            playerRb.AddForce(new Vector2(-jumpForce * 2, jumpForce * 2));
         }
     }
     private void walk(int d) {
