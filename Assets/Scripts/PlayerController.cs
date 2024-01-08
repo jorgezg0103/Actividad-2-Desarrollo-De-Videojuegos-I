@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     private Collider2D wall;
     [SerializeField] public bool grounded, lWall, rWall;
     [SerializeField]float vel=5;
+    [SerializeField] float maxVel = 5;
 
     private Rigidbody2D playerRb;
     private SpriteRenderer playerRenderer;
     public bool isDead;
+    bool jump;
+    int direction;
 
 
     // Start is called before the first frame update
@@ -31,36 +34,62 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isDead) {
-            if (Input.GetAxis("Horizontal")!=0) {
-                if (Input.GetAxis("Horizontal") > 0 && !rWall)
-                {
-                    playerRenderer.flipX = false;
-                    walk(1);
-                }
-                else if(Input.GetAxis("Horizontal") < 0 && !lWall){
-
-                    playerRenderer.flipX = true;
-                    walk(-1);
-                }
-
-            }
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                jump();
-            }
+            InputUpdate();
            
         }
         
     }
+    private void InputUpdate() {
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            if (Input.GetAxis("Horizontal") > 0 && !rWall)
+            {
+                playerRenderer.flipX = false;
+                direction = 1;
+            }
+            else if (Input.GetAxis("Horizontal") < 0 && !lWall)
+            {
 
-   public void setGrounded(bool g) {
+                playerRenderer.flipX = true;
+                direction = -1;
+            }
+            else { direction = 0; }
+
+        }
+        else { direction = 0; }
+        jump = jump || Input.GetKeyDown(KeyCode.Space);
+
+
+    }
+
+
+    private void FixedUpdate()
+    {
+       
+        if (direction != 0) {
+            walk(direction);
+        }
+        if (jump) { Jump(); }
+        clamp();
+    }
+    public void setGrounded(bool g) {
         grounded = g;
         walls.Clear();
     }
 
-    public void jump() {
+    private void clamp() {
+        if (playerRb.velocity.x > maxVel) {
+            playerRb.velocity = new Vector2(maxVel, playerRb.velocity.y);
+        }
+        else if (playerRb.velocity.x < -maxVel)
+        {
+            playerRb.velocity = new Vector2(-maxVel, playerRb.velocity.y);
+        }
+    }
+    public void Jump() {
         if (grounded)
         {
-            //playerRb.velocity = Vector2.zero;
+           
             playerRb.AddForce(new Vector2(0,jumpForce));
         }
         else if (lWall && !checkWall())
@@ -73,9 +102,10 @@ public class PlayerController : MonoBehaviour
             playerRb.velocity = Vector2.zero;
             playerRb.AddForce(new Vector2(-jumpForce * 2, jumpForce * 2));
         }
+        jump = false;
     }
     private void walk(int d) {
-        playerRb.velocity = new Vector2(d*vel,playerRb.velocity.y);
+        playerRb.AddForce(new Vector2(vel*direction,0));
     
     
     }

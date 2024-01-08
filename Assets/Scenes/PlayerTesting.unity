@@ -1860,7 +1860,8 @@ MonoBehaviour:
   grounded: 0
   lWall: 0
   rWall: 0
-  vel: 3
+  vel: 10
+  maxVel: 5
   isDead: 0
 --- !u!70 &1388824023
 CapsuleCollider2D:
