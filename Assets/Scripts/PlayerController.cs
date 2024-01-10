@@ -5,16 +5,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float jumpForce =  200;
+    
 
     private ArrayList walls;
     private Collider2D wall;
-    [SerializeField] public bool grounded, lWall, rWall;
+   
 
     [Header("Velocity")]
     [SerializeField]float speed;
     [SerializeField] float smoothTime;
-    [SerializeField] float maxVel = 5;
+    int direction;
+
+    [Header("Jump")]
+    [SerializeField] float jumpForce = 200;
+    bool jump;
+
+    [Header("Raycast")]
+    [SerializeField] Transform groundCheck; //Punto origen del raycast
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float rayLenght;
+    public bool grounded, lWall, rWall;
 
     private Rigidbody2D playerRb;
     Vector2 targetVelocity;
@@ -22,9 +32,10 @@ public class PlayerController : MonoBehaviour
 
 
     private SpriteRenderer playerRenderer;
+    Animator anim;
     public bool isDead;
-    bool jump;
-    int direction;
+  
+
 
 
     // Start is called before the first frame update
@@ -32,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         grounded = false;
         walls = new ArrayList();
 
@@ -41,8 +53,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isDead) {
+            RaycastGrounded();
             InputUpdate();
-           
+            updateAnimations();
+            
+
         }
         
     }
@@ -64,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
         }
         else { direction = 0; }
+      
+
         targetVelocity = new Vector2(direction * speed, playerRb.velocity.y);
         jump = jump || Input.GetKeyDown(KeyCode.Space);
 
@@ -76,37 +93,37 @@ public class PlayerController : MonoBehaviour
 
         playerRb.velocity = Vector2.SmoothDamp(playerRb.velocity,targetVelocity,ref dampVelocity,smoothTime);
         if (jump) { Jump(); }
-        //clamp();
+       
     }
+
+    private void RaycastGrounded() {
+        Debug.DrawRay(groundCheck.position, Vector2.down*rayLenght, Color.green);
+        if (grounded != Physics2D.Raycast(groundCheck.position, Vector2.down, rayLenght, groundLayer)) {
+            setGrounded(!grounded);
+        }
+    }
+
     public void setGrounded(bool g) {
         grounded = g;
         walls.Clear();
     }
 
-    private void clamp() {
-        if (playerRb.velocity.x > maxVel) {
-            playerRb.velocity = new Vector2(maxVel, playerRb.velocity.y);
-        }
-        else if (playerRb.velocity.x < -maxVel)
-        {
-            playerRb.velocity = new Vector2(-maxVel, playerRb.velocity.y);
-        }
-    }
+   
     public void Jump() {
         if (grounded)
         {
            
-            playerRb.AddForce(new Vector2(0,jumpForce));
+            playerRb.AddForce(Vector2.up*jumpForce);
         }
         else if (lWall && !checkWall())
         {
             playerRb.velocity = Vector2.zero;
-            playerRb.AddForce(new Vector2(jumpForce*2, jumpForce * 2));
+            playerRb.AddForce((Vector2.up+Vector2.right)*jumpForce);
 
         }
         else if (rWall && !checkWall()) {
             playerRb.velocity = Vector2.zero;
-            playerRb.AddForce(new Vector2(-jumpForce * 2, jumpForce * 2));
+            playerRb.AddForce((Vector2.up - Vector2.right) * jumpForce);
         }
         jump = false;
     }
@@ -133,4 +150,18 @@ public class PlayerController : MonoBehaviour
         }
         this.wall = wall;
     }
+    private void updateAnimations()
+    {
+        if (direction != 0)
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
+
+        anim.SetBool("isJumping", !grounded);
+    }
+
 }

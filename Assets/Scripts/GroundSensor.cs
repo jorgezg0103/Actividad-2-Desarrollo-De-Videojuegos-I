@@ -24,7 +24,7 @@ public class GroundSensor : MonoBehaviour
     {
         if (collision.tag == "Ground")
         {
-            player.GetComponent<PlayerController>().setGrounded(true);
+            //player.GetComponent<PlayerController>().setGrounded(true);
         }
         
     }
