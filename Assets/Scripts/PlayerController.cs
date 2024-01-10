@@ -10,10 +10,17 @@ public class PlayerController : MonoBehaviour
     private ArrayList walls;
     private Collider2D wall;
     [SerializeField] public bool grounded, lWall, rWall;
-    [SerializeField]float vel=5;
+
+    [Header("Velocity")]
+    [SerializeField]float speed;
+    [SerializeField] float smoothTime;
     [SerializeField] float maxVel = 5;
 
     private Rigidbody2D playerRb;
+    Vector2 targetVelocity;
+    Vector2 dampVelocity;
+
+
     private SpriteRenderer playerRenderer;
     public bool isDead;
     bool jump;
@@ -57,6 +64,7 @@ public class PlayerController : MonoBehaviour
 
         }
         else { direction = 0; }
+        targetVelocity = new Vector2(direction * speed, playerRb.velocity.y);
         jump = jump || Input.GetKeyDown(KeyCode.Space);
 
 
@@ -65,12 +73,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
-        if (direction != 0) {
-            walk(direction);
-        }
+
+        playerRb.velocity = Vector2.SmoothDamp(playerRb.velocity,targetVelocity,ref dampVelocity,smoothTime);
         if (jump) { Jump(); }
-        clamp();
+        //clamp();
     }
     public void setGrounded(bool g) {
         grounded = g;
@@ -104,11 +110,7 @@ public class PlayerController : MonoBehaviour
         }
         jump = false;
     }
-    private void walk(int d) {
-        playerRb.AddForce(new Vector2(vel*direction,0));
     
-    
-    }
 
     private bool checkWall() {
         bool check;
