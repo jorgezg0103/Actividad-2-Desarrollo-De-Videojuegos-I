@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
-{ private static GameManager instance;
-    public static GameManager Instance { get { return instancie; } }
-    public static level=1;
+{ private static GameController instance;
+    public static GameController Instance { get { return instance; } }
+    public static int level=1;
 
     private void Awake()
     {
         if (instance == null)
         {
-            instance = this
+            instance = this;
         }
         else { Destroy(gameObject); }
 
@@ -29,10 +29,10 @@ public class GameController : MonoBehaviour
         
     }
 
-    public void siguiente pantalla() {
+    public void siguientePantalla() {
         level++;
         if (level == 2) {
-            SceneManager.LoadScene("PlayerTesting");
+            
         }
     }
 }
