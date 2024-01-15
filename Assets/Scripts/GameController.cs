@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour
 { private static GameController instance;
     public static GameController Instance { get { return instance; } }
      public static int level=1;
+    public static int lives = 3;
+    private static float time = 0;
+    public static int coins = 0;
 
     private void Awake()
     {
@@ -27,11 +30,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        time += Time.deltaTime;
     }
     
     public static void nextScreen() {
         level++;
+        Debug.Log(time);
         if (level == 2) {
             SceneManager.LoadScene("Level2");
         }
