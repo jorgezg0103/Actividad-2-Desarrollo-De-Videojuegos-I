@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour
             lWall = true;
         }
         this.wall = wall;
+
     }
     private void updateAnimations()
     {
