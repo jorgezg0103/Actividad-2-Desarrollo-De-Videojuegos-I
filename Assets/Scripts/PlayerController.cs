@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     [SerializeField] float jumpForce = 200;
     bool jump;
+    int jumps;
 
     [Header("Raycast")]
     [SerializeField] Transform groundCheck; //Punto origen del raycast
@@ -34,6 +35,9 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer playerRenderer;
     Animator anim;
     public bool isDead;
+
+    private float startX;
+    private float startY;
   
 
 
@@ -46,6 +50,8 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         grounded = false;
         walls = new ArrayList();
+        startX = this.transform.position.x;
+        startY = this.transform.position.y;
 
     }
 
@@ -106,24 +112,38 @@ public class PlayerController : MonoBehaviour
     public void setGrounded(bool g) {
         grounded = g;
         walls.Clear();
+        jumps = 1;
     }
 
    
     public void Jump() {
-        if (grounded)
+        if (!grounded)
         {
-           
-            playerRb.AddForce(Vector2.up*jumpForce);
-        }
-        else if (lWall && !checkWall())
-        {
-            playerRb.velocity = Vector2.zero;
-            playerRb.AddForce((Vector2.up+Vector2.right)*jumpForce);
+            
+             if (lWall && !checkWall())
+            {
+                playerRb.velocity = Vector2.zero;
+                playerRb.AddForce((Vector2.up + Vector2.right) * jumpForce);
 
+            }
+            else if (rWall && !checkWall())
+            {
+                playerRb.velocity = Vector2.zero;
+                playerRb.AddForce((Vector2.up - Vector2.right) * jumpForce);
+            }
+            else if ( jumps > 0)
+            {
+                playerRb.velocity = playerRb.velocity * Vector2.right;
+                playerRb.AddForce(Vector2.up * jumpForce);
+
+                jumps--;
+            }
         }
-        else if (rWall && !checkWall()) {
-            playerRb.velocity = Vector2.zero;
-            playerRb.AddForce((Vector2.up - Vector2.right) * jumpForce);
+        else {
+            playerRb.velocity = playerRb.velocity * Vector2.right;
+            playerRb.AddForce(Vector2.up * jumpForce);
+
+            jumps--;
         }
         jump = false;
     }
@@ -165,9 +185,18 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag=="Finish") {
+        if (collision.tag == "Finish")
+        {
             Debug.Log("cambio nivel");
             GameController.nextScreen();
+        }
+        else if (collision.tag == "Pit") {
+            GameController.lives--;
+            Debug.Log(GameController.lives);
+            if (GameController.lives > 0) {
+                this.transform.position = new Vector3(startX,startY,1);
+            }
+        
         }
     }
 }

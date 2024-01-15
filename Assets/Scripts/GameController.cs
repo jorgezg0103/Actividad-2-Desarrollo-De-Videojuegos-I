@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 { private static GameController instance;
     public static GameController Instance { get { return instance; } }
      public static int level=1;
+    public static int lives = 3;
 
     private void Awake()
     {
