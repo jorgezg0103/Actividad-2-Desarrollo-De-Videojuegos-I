@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         if (!isDead) {
             RaycastGrounded();
             InputUpdate();
+            ChangeGravity();
             updateAnimations();
             
 
@@ -203,6 +204,16 @@ public class PlayerController : MonoBehaviour
             startX = collision.transform.position.x;
             startY = collision.transform.position.y;
         
+        }
+    }
+
+    private void ChangeGravity() {
+        if (playerRb.velocity.y < 0)
+        {
+            playerRb.gravityScale = 1.7f;
+        }
+        else {
+            playerRb.gravityScale = 1;
         }
     }
 }
