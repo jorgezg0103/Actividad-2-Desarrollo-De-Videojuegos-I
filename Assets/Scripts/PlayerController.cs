@@ -198,5 +198,10 @@ public class PlayerController : MonoBehaviour
             }
         
         }
+        else if(collision.tag == "Respawn"){
+            startX = collision.transform.position.x;
+            startY = collision.transform.position.y;
+        
+        }
     }
 }
