@@ -163,5 +163,11 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isJumping", !grounded);
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag=="Finish") {
+            Debug.Log("cambio nivel");
+            GameController.nextScreen();
+        }
+    }
 }
