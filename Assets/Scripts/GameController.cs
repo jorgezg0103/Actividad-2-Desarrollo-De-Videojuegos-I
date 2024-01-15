@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 { private static GameController instance;
     public static GameController Instance { get { return instance; } }
-    public static int level=1;
+     public static int level=1;
 
     private void Awake()
     {
@@ -28,11 +29,11 @@ public class GameController : MonoBehaviour
     {
         
     }
-
-    public void siguientePantalla() {
+    
+    public static void nextScreen() {
         level++;
         if (level == 2) {
-            
+            SceneManager.LoadScene("Level2");
         }
     }
 }
