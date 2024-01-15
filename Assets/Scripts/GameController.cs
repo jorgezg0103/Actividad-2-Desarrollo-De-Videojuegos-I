@@ -35,5 +35,11 @@ public class GameController : MonoBehaviour
         if (level == 2) {
             SceneManager.LoadScene("Level2");
         }
+        if (level == 3) {
+            SceneManager.LoadScene("Level3");
+        }
+        if (level == 3) {
+            SceneManager.LoadScene("End");
+        }
     }
 }
