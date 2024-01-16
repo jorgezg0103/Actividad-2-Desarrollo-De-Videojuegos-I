@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Awake()
     {
-        offset = this.transform.position - player.position;
+        offset =transform.position - player.position;
     }
 
     // Start is called before the first frame update
