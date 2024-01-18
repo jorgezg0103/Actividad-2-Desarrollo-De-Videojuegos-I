@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
      public static int level=1;
     public static int lives = 3;
     private static float time = 0;
-    public static int coins = 0;
+    private static int coins = 0;
 
     private void Awake()
     {
@@ -21,6 +21,15 @@ public class GameController : MonoBehaviour
 
 
     }
+
+    private void OnEnable() {
+        Coin.OnCoinCollected += increaseScore;
+    }
+
+    private void OnDisable() {
+        Coin.OnCoinCollected += increaseScore;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,5 +54,10 @@ public class GameController : MonoBehaviour
         if (level == 3) {
             SceneManager.LoadScene("End");
         }
+    }
+
+    private void increaseScore() {
+        coins++;
+        Debug.Log(coins);
     }
 }
