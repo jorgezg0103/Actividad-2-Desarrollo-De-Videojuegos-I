@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public static int lives = 3;
     private static float time = 0;
     private static int coins = 0;
+    private UIController UIController;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
         }
         else { Destroy(gameObject); }
 
+        UIController = GameObject.Find("Canvas").GetComponent<UIController>();
 
     }
 
@@ -58,6 +60,6 @@ public class GameController : MonoBehaviour
 
     private void increaseScore() {
         coins++;
-        Debug.Log(coins);
+        UIController.changeScore(coins);
     }
 }
