@@ -193,12 +193,15 @@ public class PlayerController : MonoBehaviour
             GameController.nextScreen();
         }
         else if (collision.tag == "Pit") {
-            GameController.lives--;
-            Debug.Log(GameController.lives);
-            if (GameController.lives > 0) {
-                this.transform.position = new Vector3(startX,startY,1);
-            }
+            Hurt();
+            
         
+        }
+        else if (collision.tag == "Enemy")
+        {
+            Hurt();
+
+
         }
         else if(collision.tag == "Respawn"){
             startX = collision.transform.position.x;
@@ -214,6 +217,14 @@ public class PlayerController : MonoBehaviour
         }
         else {
             playerRb.gravityScale = 1;
+        }
+    }
+    public void Hurt() {
+        GameController.lives--;
+        Debug.Log(GameController.lives);
+        if (GameController.lives > 0)
+        {
+            this.transform.position = new Vector3(startX, startY, 1);
         }
     }
 }
