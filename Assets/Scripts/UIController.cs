@@ -28,7 +28,6 @@ public class UIController : MonoBehaviour
     Transform health;
     Transform score;
 
-    private int time = 0;
     
     private void clearUI() {
         foreach(Transform child in transform) {
@@ -53,16 +52,8 @@ public class UIController : MonoBehaviour
         score.GetChild(1).GetComponent<TextMeshProUGUI>().text = value.ToString();
     }
 
-    IEnumerator startTimer() {
-        while(true) {
-            time++;
-            timer.GetChild(1).GetComponent<TextMeshProUGUI>().text = time.ToString();
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
-    private void startSecondsCount() {
-        StartCoroutine(startTimer());
+    public void changeTime(int value) {
+        timer.GetChild(1).GetComponent<TextMeshProUGUI>().text = value.ToString();
     }
 
 
@@ -73,10 +64,6 @@ public class UIController : MonoBehaviour
         timer = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Time);
         health = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Health);
         score = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Score);
-    }
-
-    private void Start() {
-        Invoke("startSecondsCount", 1f);
     }
 
 }

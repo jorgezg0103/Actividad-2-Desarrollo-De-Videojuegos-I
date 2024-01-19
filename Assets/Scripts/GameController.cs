@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
+        UIController.changeTime((int)time);
     }
     
     public static void nextScreen() {
