@@ -5,7 +5,7 @@ using UnityEngine;
 public class WallSensor : MonoBehaviour
 {
     [SerializeField] string name;
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject player;    
     // Start is called before the first frame update
     void Start()
     {
