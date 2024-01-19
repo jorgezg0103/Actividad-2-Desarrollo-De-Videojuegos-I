@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Coin : MonoBehaviour
+public class Coin : Item
 {
 
     public static UnityAction OnCoinCollected;
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    protected override void performAction() {
         OnCoinCollected.Invoke();
-        Destroy(gameObject);
     }
 }
