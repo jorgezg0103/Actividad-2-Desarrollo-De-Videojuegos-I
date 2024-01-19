@@ -42,7 +42,10 @@ public class UIController : MonoBehaviour
 
     public static void changeHealth(int value) {
         for(int i = 0; i < health.childCount; i++) {
-            if(i >= value) {
+            if(i < value) {
+                health.GetChild(i).gameObject.SetActive(true);
+            }
+            else { 
                 health.GetChild(i).gameObject.SetActive(false);
             }
         }
