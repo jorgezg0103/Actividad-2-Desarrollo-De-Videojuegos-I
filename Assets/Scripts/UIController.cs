@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
     private List<GameObject> UIComponents = new List<GameObject>();
 
     Transform timer;
-    Transform health;
+    static Transform health;
     Transform score;
 
     
@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
         transform.GetChild((int) component).gameObject.SetActive(true);
     }
 
-    public void changeHealth(int value) {
+    public static void changeHealth(int value) {
         for(int i = 0; i < health.childCount; i++) {
             if(i >= value) {
                 health.GetChild(i).gameObject.SetActive(false);

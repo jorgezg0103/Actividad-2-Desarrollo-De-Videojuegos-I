@@ -193,8 +193,7 @@ public class PlayerController : MonoBehaviour
             GameController.nextScreen();
         }
         else if (collision.tag == "Pit") {
-            GameController.lives--;
-            Debug.Log(GameController.lives);
+            GameController.changePlayerLives(GameController.lives - 1);
             if (GameController.lives > 0) {
                 this.transform.position = new Vector3(startX,startY,1);
             }

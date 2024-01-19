@@ -63,4 +63,10 @@ public class GameController : MonoBehaviour
         coins++;
         UIController.changeScore(coins);
     }
+
+    public static void changePlayerLives(int value) {
+        lives = value;
+        UIController.changeHealth(lives);
+        Debug.Log("Lives:" + lives);
+    }
 }
