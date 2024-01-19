@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 { private static GameController instance;
     public static GameController Instance { get { return instance; } }
-     public static int level=1;
+ 
+    public static int level=1;
     public static int lives = 3;
     private static float time = 0;
     private static int coins = 0;
-    private UIController UIController;
+    private UIController UIController; 
 
     private void Awake()
     {
