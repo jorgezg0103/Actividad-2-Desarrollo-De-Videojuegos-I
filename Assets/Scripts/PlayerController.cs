@@ -194,14 +194,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.tag == "Pit") {
             Hurt();
-            
-        
         }
         else if (collision.tag == "Enemy")
         {
             Hurt();
-
-
         }
         else if(collision.tag == "Respawn"){
             startX = collision.transform.position.x;
@@ -220,7 +216,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     public void Hurt() {
-        GameController.lives--;
+        GameController.changePlayerLives(GameController.lives - 1);
         Debug.Log(GameController.lives);
         if (GameController.lives > 0)
         {

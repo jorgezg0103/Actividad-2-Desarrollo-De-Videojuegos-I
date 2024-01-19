@@ -9,10 +9,9 @@ public class GameController : MonoBehaviour
  
     public static int level=1;
     public static int lives = 3;
-    public static float time = 0;
-    public static int coins = 0;
-
-    
+    private static float time = 0;
+    private static int coins = 0;
+    private UIController UIController; 
 
     private void Awake()
     {
@@ -22,8 +21,18 @@ public class GameController : MonoBehaviour
         }
         else { Destroy(gameObject); }
 
+        UIController = GameObject.Find("Canvas").GetComponent<UIController>();
 
     }
+
+    private void OnEnable() {
+        Coin.OnCoinCollected += increaseScore;
+    }
+
+    private void OnDisable() {
+        Coin.OnCoinCollected += increaseScore;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +43,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
+        UIController.changeTime((int)time);
     }
     
     public static void nextScreen() {
@@ -50,5 +60,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-   
+    private void increaseScore() {
+        coins++;
+        UIController.changeScore(coins);
+    }
+
+    public static void changePlayerLives(int value) {
+        lives = value;
+        UIController.changeHealth(lives);
+        Debug.Log("Lives:" + lives);
+    }
 }
