@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     private static int coins = 0;
     private UIController UIController;
     private AudioSource source;
+    public static float audioVolume=1; // from 0 to 1
     private void Awake()
     {
         if (instance == null)
@@ -65,6 +66,7 @@ public class GameController : MonoBehaviour
 
     private void increaseScore() {
         coins++;
+        source.volume = audioVolume;
         source.Play();
         UIController.changeScore(coins);
     }

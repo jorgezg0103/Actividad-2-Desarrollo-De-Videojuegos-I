@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
 
    
     public void Jump() {
+        source.volume = GameController.audioVolume;
         if (!grounded)
         {
             
