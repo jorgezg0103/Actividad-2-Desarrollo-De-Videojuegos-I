@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     private float startX;
     private float startY;
+
+    private AudioSource source;
   
 
 
@@ -52,6 +54,8 @@ public class PlayerController : MonoBehaviour
         walls = new ArrayList();
         startX = this.transform.position.x;
         startY = this.transform.position.y;
+
+        source = GetComponent<AudioSource>();
 
     }
 
@@ -125,25 +129,27 @@ public class PlayerController : MonoBehaviour
             {
                 playerRb.velocity = Vector2.zero;
                 playerRb.AddForce((Vector2.up + Vector2.right) * jumpForce);
+                source.Play();
 
             }
             else if (rWall && !checkWall())
             {
                 playerRb.velocity = Vector2.zero;
                 playerRb.AddForce((Vector2.up - Vector2.right) * jumpForce);
+                source.Play();
             }
             else if ( jumps > 0)
             {
                 playerRb.velocity = playerRb.velocity * Vector2.right;
                 playerRb.AddForce(Vector2.up * jumpForce);
-
+                source.Play();
                 jumps--;
             }
         }
         else {
             playerRb.velocity = playerRb.velocity * Vector2.right;
             playerRb.AddForce(Vector2.up * jumpForce);
-
+            source.Play();
             jumps--;
         }
         jump = false;

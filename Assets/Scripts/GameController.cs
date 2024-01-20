@@ -11,8 +11,8 @@ public class GameController : MonoBehaviour
     public static int lives = 3;
     private static float time = 0;
     private static int coins = 0;
-    private UIController UIController; 
-
+    private UIController UIController;
+    private AudioSource source;
     private void Awake()
     {
         if (instance == null)
@@ -22,15 +22,18 @@ public class GameController : MonoBehaviour
         else { Destroy(gameObject); }
 
         UIController = GameObject.Find("Canvas").GetComponent<UIController>();
+        source = GetComponent<AudioSource>();
 
     }
 
     private void OnEnable() {
         Coin.OnCoinCollected += increaseScore;
+        
     }
 
     private void OnDisable() {
         Coin.OnCoinCollected += increaseScore;
+
     }
 
     // Start is called before the first frame update
@@ -62,6 +65,7 @@ public class GameController : MonoBehaviour
 
     private void increaseScore() {
         coins++;
+        source.Play();
         UIController.changeScore(coins);
     }
 
