@@ -79,7 +79,13 @@ public class GameController : MonoBehaviour
         if(lives <= 0) {
             UIController.setUIComponent(UIController.UI.GameOverMenu);
             UIController.setGameOverScore(coins);
+            instance.StartCoroutine("setCreditsScreen");
         }
+    }
+
+    private IEnumerator setCreditsScreen() {
+        yield return new WaitForSeconds(5f);
+        UIController.setUIComponent(UIController.UI.CreditsMenu);
     }
 
     public static void resetGame() {
