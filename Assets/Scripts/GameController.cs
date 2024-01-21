@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public static int lives = 3;
     private static float time = 0;
     private static int coins = 0;
-    private UIController UIController;
+    private static UIController UIController;
     private AudioSource source;
     public static float audioVolume=1; // from 0 to 1
     private void Awake()
@@ -75,5 +75,12 @@ public class GameController : MonoBehaviour
         lives = value;
         UIController.changeHealth(lives);
         Debug.Log("Lives:" + lives);
+        if(lives <= 0) {
+            UIController.setUIComponent(UIController.UI.GameOverMenu);
+        }
+    }
+
+    public static void resetGame() {
+        SceneManager.LoadScene("Level1");
     }
 }
