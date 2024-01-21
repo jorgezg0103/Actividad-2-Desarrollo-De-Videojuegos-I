@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Level1") {
             pauseGame();
         }
-        UIController.changeScore(coins);
+        
     }
 
     private void OnEnable() {
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UIController.changeScore(coins);
     }
 
     // Update is called once per frame
