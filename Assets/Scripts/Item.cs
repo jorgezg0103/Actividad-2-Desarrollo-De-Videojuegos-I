@@ -8,7 +8,9 @@ public abstract class Item : MonoBehaviour
     protected abstract void performAction();
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag == "Player") { 
         performAction();
         Destroy(gameObject);
+        }
     }
 }
