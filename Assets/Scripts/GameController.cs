@@ -84,6 +84,7 @@ public class GameController : MonoBehaviour
     public static void resetGame() {
         SceneManager.LoadScene("Level1");
         time = 0;
+        coins = 0;
     }
 
     public static void pauseGame() {
