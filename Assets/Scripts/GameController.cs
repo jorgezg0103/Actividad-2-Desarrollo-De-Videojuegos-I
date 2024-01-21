@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public static int lives = 3;
     private static float time = 0;
     private static int coins = 0;
-    private UIController UIController;
+    private static UIController UIController;
     private AudioSource source;
     public static float audioVolume=1; // from 0 to 1
     private void Awake()
@@ -24,17 +24,18 @@ public class GameController : MonoBehaviour
 
         UIController = GameObject.Find("Canvas").GetComponent<UIController>();
         source = GetComponent<AudioSource>();
-
+        if(SceneManager.GetActiveScene().name == "Level1") {
+            pauseGame();
+        }
+        UIController.changeScore(coins);
     }
 
     private void OnEnable() {
         Coin.OnCoinCollected += increaseScore;
-        
     }
 
     private void OnDisable() {
-        Coin.OnCoinCollected += increaseScore;
-
+        Coin.OnCoinCollected -= increaseScore;
     }
 
     // Start is called before the first frame update
@@ -75,5 +76,26 @@ public class GameController : MonoBehaviour
         lives = value;
         UIController.changeHealth(lives);
         Debug.Log("Lives:" + lives);
+        if(lives <= 0) {
+            UIController.setUIComponent(UIController.UI.GameOverMenu);
+            UIController.setGameOverScore(coins);
+        }
+    }
+
+    public static void resetGame() {
+        SceneManager.LoadScene("Level1");
+        time = 0;
+        coins = 0;
+    }
+
+    public static void pauseGame() {
+        Time.timeScale = 0;
+    }
+    public static void resumeGame() {
+        Time.timeScale = 1;
+    }
+
+    public void controlVolume(System.Single vol) {
+        audioVolume = vol;
     }
 }
