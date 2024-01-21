@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -27,7 +28,11 @@ public class UIController : MonoBehaviour
     Transform timer;
     static Transform health;
     Transform score;
+    Transform pauseButton;
 
+    private bool gamePausedButton = false;
+    [SerializeField] private Sprite play;
+    [SerializeField] private Sprite pause;
     
     private void clearUI() {
         foreach(Transform child in transform) {
@@ -59,6 +64,20 @@ public class UIController : MonoBehaviour
         timer.GetChild(1).GetComponent<TextMeshProUGUI>().text = value.ToString();
     }
 
+    public void togglePauseButton() {
+        if(gamePausedButton) {
+            GameController.resumeGame();
+            pauseButton.GetComponent<Image>().sprite = pause;
+            UIComponents[(int) UI.PauseMenu].SetActive(false);
+            gamePausedButton = false;
+        }
+        else {
+            GameController.pauseGame();
+            pauseButton.GetComponent<Image>().sprite = play;
+            UIComponents[(int) UI.PauseMenu].SetActive(true);
+            gamePausedButton = true;
+        }
+    }
 
     private void Awake() {
         foreach(Transform child in transform) {
@@ -67,6 +86,7 @@ public class UIController : MonoBehaviour
         timer = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Time);
         health = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Health);
         score = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Score);
+        pauseButton = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.PauseButton);
     }
 
 }
