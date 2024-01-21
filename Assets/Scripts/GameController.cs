@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Level1") {
             pauseGame();
         }
-        UIController.changeScore(coins);
+        
     }
 
     private void OnEnable() {
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UIController.changeScore(coins);
     }
 
     // Update is called once per frame
@@ -79,7 +79,13 @@ public class GameController : MonoBehaviour
         if(lives <= 0) {
             UIController.setUIComponent(UIController.UI.GameOverMenu);
             UIController.setGameOverScore(coins);
+            instance.StartCoroutine("setCreditsScreen");
         }
+    }
+
+    private IEnumerator setCreditsScreen() {
+        yield return new WaitForSeconds(5f);
+        UIController.setUIComponent(UIController.UI.CreditsMenu);
     }
 
     public static void resetGame() {
