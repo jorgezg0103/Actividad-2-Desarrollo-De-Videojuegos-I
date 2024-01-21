@@ -13,6 +13,6 @@ public class SnakeController : MonoBehaviour
     }
 
     void Update() {
-        trans.position = new Vector3(startingPos.x, startingPos.y + Mathf.PingPong(Time.time, 3), startingPos.z);
+        trans.position = new Vector3(startingPos.x, startingPos.y + Mathf.PingPong(Time.time, 2), startingPos.z);
     }
 }
