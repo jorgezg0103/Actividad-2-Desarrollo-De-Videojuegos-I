@@ -91,4 +91,8 @@ public class GameController : MonoBehaviour
     public static void resumeGame() {
         Time.timeScale = 1;
     }
+
+    public void controlVolume(System.Single vol) {
+        audioVolume = vol;
+    }
 }

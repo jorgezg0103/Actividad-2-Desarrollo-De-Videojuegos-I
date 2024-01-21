@@ -79,14 +79,24 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void Awake() {
-        foreach(Transform child in transform) {
-            UIComponents.Add(child.gameObject);
-        }
+    private void initializeVolume() {
+        Slider volumeBar = UIComponents[(int) UI.OptionsMenu].transform.Find("Slider").GetComponent<Slider>();
+        volumeBar.value = GameController.audioVolume;
+    }
+
+    private void getHUDReferences() {
         timer = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Time);
         health = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Health);
         score = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.Score);
         pauseButton = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.PauseButton);
+    }
+
+    private void Awake() {
+        foreach(Transform child in transform) {
+            UIComponents.Add(child.gameObject);
+        }
+        getHUDReferences();
+        initializeVolume();
     }
 
 }
