@@ -24,7 +24,9 @@ public class GameController : MonoBehaviour
 
         UIController = GameObject.Find("Canvas").GetComponent<UIController>();
         source = GetComponent<AudioSource>();
-        pauseGame();
+        if(SceneManager.GetActiveScene().name == "Level1") {
+            pauseGame();
+        }
     }
 
     private void OnEnable() {

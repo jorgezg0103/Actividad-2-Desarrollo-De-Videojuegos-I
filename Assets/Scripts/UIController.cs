@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -96,7 +97,9 @@ public class UIController : MonoBehaviour
             UIComponents.Add(child.gameObject);
         }
         getHUDReferences();
-        initializeVolume();
+        if(SceneManager.GetActiveScene().name == "Level1") {
+            initializeVolume();
+        }
     }
 
 }
