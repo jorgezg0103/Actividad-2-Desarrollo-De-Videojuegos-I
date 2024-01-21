@@ -29,11 +29,11 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         rb.velocity = new Vector2(dirX * speed, rb.velocity.y);
-        if(dirX > 0)
+        if(dirX < 0)
         {
             facingRight = true;
         }
-        else if(dirX < 0)
+        else if(dirX > 0)
         {
             facingRight = false;
         }
