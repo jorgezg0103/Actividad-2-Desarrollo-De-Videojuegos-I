@@ -92,6 +92,11 @@ public class UIController : MonoBehaviour
         pauseButton = UIComponents[(int) UI.Hud].transform.GetChild((int) HUD.PauseButton);
     }
 
+    public void setGameOverScore(int value) {
+        Transform scoreTransform = UIComponents[(int) UI.GameOverMenu].transform.Find("Score");
+        scoreTransform.GetComponent<TextMeshProUGUI>().text = "Score: " + value;
+    }
+
     private void Awake() {
         foreach(Transform child in transform) {
             UIComponents.Add(child.gameObject);

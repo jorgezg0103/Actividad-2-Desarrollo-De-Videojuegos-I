@@ -79,6 +79,7 @@ public class GameController : MonoBehaviour
         Debug.Log("Lives:" + lives);
         if(lives <= 0) {
             UIController.setUIComponent(UIController.UI.GameOverMenu);
+            UIController.setGameOverScore(coins);
         }
     }
 
