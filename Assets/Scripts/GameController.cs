@@ -31,12 +31,10 @@ public class GameController : MonoBehaviour
 
     private void OnEnable() {
         Coin.OnCoinCollected += increaseScore;
-        
     }
 
     private void OnDisable() {
-        Coin.OnCoinCollected += increaseScore;
-
+        Coin.OnCoinCollected -= increaseScore;
     }
 
     // Start is called before the first frame update
