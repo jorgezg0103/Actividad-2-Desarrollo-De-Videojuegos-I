@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Level1") {
             pauseGame();
         }
+        UIController.changeScore(coins);
     }
 
     private void OnEnable() {
