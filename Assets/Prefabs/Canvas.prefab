@@ -4807,7 +4807,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Title
+  m_text: Super Trip Bros
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 775a4787b0e3be7458ac8c056be5662c, type: 2}
   m_sharedMaterial: {fileID: 3158241934264652858, guid: 775a4787b0e3be7458ac8c056be5662c, type: 2}
