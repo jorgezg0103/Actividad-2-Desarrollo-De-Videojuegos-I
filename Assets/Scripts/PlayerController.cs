@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         walls = new ArrayList();
         startX = this.transform.position.x;
         startY = this.transform.position.y;
-
+        isDead = false;
         source = GetComponent<AudioSource>();
 
     }
@@ -62,15 +62,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead) {
+        if (!isDead)
+        {
             RaycastGrounded();
             InputUpdate();
             ChangeGravity();
-            updateAnimations();
-            
+          
+
 
         }
-        
+        updateAnimations();
+
     }
     private void InputUpdate() {
         if (Input.GetAxis("Horizontal") != 0)
@@ -191,6 +193,10 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetBool("isJumping", !grounded);
+
+        if (isDead) {
+            anim.SetBool("isDead", true);
+        }
     }
 
     private IEnumerator resetIsColliding() {
@@ -233,8 +239,11 @@ public class PlayerController : MonoBehaviour
     public void Hurt() {
         GameController.changePlayerLives(GameController.lives - 1);
         Debug.Log(GameController.lives);
-        if (GameController.lives > 0)
-        {
+        //if (GameController.lives > 0){
+            this.transform.position = new Vector3(startX, startY, 1);
+        //}
+        if (GameController.lives < 1) {
+            isDead = true;
             this.transform.position = new Vector3(startX, startY, 1);
         }
     }
