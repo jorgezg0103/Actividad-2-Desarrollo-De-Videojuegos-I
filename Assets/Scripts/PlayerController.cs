@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
     private float startY;
 
     private AudioSource source;
-  
 
+    private bool isColliding = false;
 
 
     // Start is called before the first frame update
@@ -192,8 +192,16 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("isJumping", !grounded);
     }
+
+    private IEnumerator resetIsColliding() {
+        yield return new WaitForEndOfFrame();
+        isColliding = false;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(isColliding) return;
+        isColliding = true;
+        StartCoroutine(resetIsColliding());
         if (collision.tag == "Finish")
         {
             Debug.Log("cambio nivel");
