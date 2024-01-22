@@ -14,7 +14,8 @@ public class UIController : MonoBehaviour
         GameOverMenu,
         MainMenu,
         OptionsMenu,
-        CreditsMenu
+        CreditsMenu,
+        VictoryMenu
     }
 
     private enum HUD {

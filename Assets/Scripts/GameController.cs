@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
     }
     
     public static void nextScreen() {
-        level++;
+        level = 4;
         Debug.Log(time);
         if (level == 2) {
             SceneManager.LoadScene("Level2");
@@ -60,8 +60,8 @@ public class GameController : MonoBehaviour
         if (level == 3) {
             SceneManager.LoadScene("Level3");
         }
-        if (level == 3) {
-            SceneManager.LoadScene("End");
+        if (level == 4) {
+            UIController.setUIComponent(UIController.UI.VictoryMenu);
         }
     }
 
